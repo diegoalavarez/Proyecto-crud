@@ -104,3 +104,5 @@ function obtenerCursos(req) {
 // Ejemplo de uso de la API simulada
 const request = { categoria: "programacion", nivel: "Intermedio", ordenar: "vistas" };
 console.log(obtenerCursos(request));
+
+.
