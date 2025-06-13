@@ -20,7 +20,7 @@ app.get('/api/courses', (req, res) =>{
 app.get("/", (req, res) => {
     res.send(`El servidor está funcionando correctamente. Puedes acceder a las rutas de cursos de programación y marketing.`);
 })
-
+// ruta del server
 const PUERTO = 3000;
 
 app.listen(PUERTO, () => {
