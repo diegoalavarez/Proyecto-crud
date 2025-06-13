@@ -5,22 +5,22 @@ const { marketing } = require("../data/courses.js").infoCourses;
 
 routerMarketing.use(express.json());
 
-// incluye funciones auxiliares
+// se incluyen funciones auxiliares
 const {
   sortByViewsAscending,
   sortByViewsDescending,
 } = require("../auxiliaryFunctions.js");
 
-// Only marketing courses
+// solo cursos de marketing
 
 routerMarketing.get("/", (req, res) => {
   res.send(JSON.stringify(marketing));
 });
 
 // Marketing courses filter by subject
-// Query parameters supported:
-// - orderascending=views: Sorts the results by views in ascending order
-// - orderdescending=views: Sorts the results by views in descending order
+//parametros query aceptados:
+// orderascending=views:se muestra los cursos de marketing ordenados por views en orden ascendente
+// orderdescending=views:se muestra los cursos de marketing ordenados por views en orden descendente
 
 routerMarketing.get("/:subject", (req, res) => {
   const subject = req.params.subject;
@@ -43,7 +43,7 @@ routerMarketing.get("/:subject", (req, res) => {
   res.send(JSON.stringify(results));
 });
 
-// Marketing courses filter by subject & level
+// filtrar cursos de marketing por subject y level
 
 routerMarketing.get("/:subject/:level", (req, res) => {
   const subject = req.params.subject;

@@ -7,10 +7,39 @@ const programmingCourses = infoCourses.Programming;
 routerProgramming.use(express.json());
 
 
+routerProgramming.get('/' ,(req,res) =>{
+    res.send(programmingCourses);
+})
 
+//Solo cursos de programacion
+routerProgramming.get('/:language' ,(req,res) =>{
+    const language = req.params.language;
+    const results = programmingCourses.filter(course => course.language === language.toLowerCase());
+    
 
-//P.P.P.D
+    if(results.length === 0) {
+        return res.status(404).send(`Could not find "${language}" courses..`);
+    }
+        res.send(JSON.stringify(results));
+    
+});
 
+//cursos de programacion filtrados por lenguaje y nivel
+
+routerProgramming.get('/:language/:level', (req, res) => {
+    const language = req.params.language;
+    const level = req.params.level;
+
+    const results = programmingCourses.filter(courses =>
+        courses.language.toLowerCase() === language.toLowerCase() && courses.level.toLowerCase() === level.toLowerCase()
+    );
+
+    if (results.length === 0) {
+        return res.status(404).json( `Could not find ${language} courses of ${level} level :(` );
+    }
+
+    res.send(JSON.stringify(results));
+});
 
 //Post
 
@@ -20,8 +49,6 @@ routerProgramming.post("/", (req, res) =>{
     programmingCourses.push(newCourse);
     res.json(programmingCourses); 
 });
-
-
 
 //Put
 routerProgramming.put('/:id' , (req,res) =>{
@@ -40,8 +67,6 @@ if(index >= 0){
 res.send(JSON.stringify(programmingCourses));
 
 });
-
-
 
 //Patch
 
@@ -62,9 +87,6 @@ routerProgramming.patch('/:id' , (req,res) =>{
 
 }); 
 
-
-
-
 //Delete
 
 routerProgramming.delete('/:id' , (req,res) =>{
@@ -83,50 +105,5 @@ routerProgramming.delete('/:id' , (req,res) =>{
     res.send(JSON.stringify(programmingCourses))
 
 });
-
-
-
-
-routerProgramming.get('/' ,(req,res) =>{
-    res.send(programmingCourses);
-})
-
-
-
-//ONLY Programming Courses
-
-routerProgramming.get('/:language' ,(req,res) =>{
-    const language = req.params.language;
-    const results = programmingCourses.filter(course => course.language === language.toLowerCase());
-    
-
-    if(results.length === 0) {
-        return res.status(404).send(`Could not find "${language}" courses..`);
-    }
-        res.send(JSON.stringify(results));
-    
-});
-
-
-
-
-//Programming courses sorted by language & level
-
-routerProgramming.get('/:language/:level', (req, res) => {
-    const language = req.params.language;
-    const level = req.params.level;
-
-    const results = programmingCourses.filter(courses =>
-        courses.language.toLowerCase() === language.toLowerCase() && courses.level.toLowerCase() === level.toLowerCase()
-    );
-
-    if (results.length === 0) {
-        return res.status(404).json( `Could not find ${language} courses of ${level} level :(` );
-    }
-
-    res.send(JSON.stringify(results));
-});
-
-
 
 module.exports = routerProgramming;
