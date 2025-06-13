@@ -23,6 +23,6 @@ app.get("/", (req, res) => {
 
 const PUERTO = 3000;
 
-servidor.listen(PUERTO, () => {
+app.listen(PUERTO, () => {
     console.log(`El servidor esta escuchando en http://localhost:${PUERTO}...`);
 });
