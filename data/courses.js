@@ -1,5 +1,5 @@
 const infoCursos = {
-    programacion: [
+    programming: [
         { 
             id: 1, 
             titulo: "Aprende Python", 
