@@ -1,4 +1,6 @@
-const sortByViewsAscending = (courses) => { 
+//funciones para ordenar cursos por vistas de forma ascendente y descendente
+
+const sortByViewsAscending = (courses) => {
   return courses.sort((a, b) => a.views - b.views);
 };
 
