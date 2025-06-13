@@ -2,10 +2,10 @@ const express = require("express");
 const routerMarketing = express.Router();
 const { marketing } = require("../data/courses.js").infoCourses;
 
-// Middleware
+
 routerMarketing.use(express.json());
 
-// include auxiliary functions
+// incluye funciones auxiliares
 const {
   sortByViewsAscending,
   sortByViewsDescending,
