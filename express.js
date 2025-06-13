@@ -29,3 +29,7 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
 console.log(`The server is listening to the port ${PORT}..`);
 } );
+
+
+
+// sintaxis de servidor
