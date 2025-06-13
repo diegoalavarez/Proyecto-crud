@@ -88,19 +88,3 @@ const infoCursos = {
         }
     ]
 };
-
-// Simulación de una API para obtener cursos
-function obtenerCursos(req) {
-    const { categoria, nivel, ordenar } = req;
-    let cursos = infoCursos[categoria]?.filter(curso => curso.nivel === nivel) || `La categoría '${categoria}' no existe.`;
-
-    if (ordenar === "vistas" && Array.isArray(cursos)) {
-        cursos = cursos.sort((a, b) => b.vistas - a.vistas);
-    }
-
-    return cursos;
-}
-
-// Ejemplo de uso de la API simulada
-const request = { categoria: "programacion", nivel: "Intermedio", ordenar: "vistas" };
-console.log(obtenerCursos(request));
