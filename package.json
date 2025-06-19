@@ -1,5 +1,23 @@
 {
   "dependencies": {
     "express": "^5.1.0"
-  }
+  },
+  "name": "proyecto-crud",
+  "version": "1.0.0",
+  "main": "auxiliaryFunctions.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaeltriasdev/Proyecto-crud.git"
+  },
+  "author": "Rafael",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rafaeltriasdev/Proyecto-crud/issues"
+  },
+  "homepage": "https://github.com/rafaeltriasdev/Proyecto-crud#readme",
+  "description": ""
 }
