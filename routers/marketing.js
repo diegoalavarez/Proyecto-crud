@@ -13,11 +13,7 @@ routerMarketing.get('/:tema', (req, res) => {
     const resultados = marketing.filter(curso => curso.tema === tema);
 
     if (resultados.length === 0) {
-        return res.status(404).send(`No se encontraron cursos de ${tema}`);
-    }
-
-    if (req.query.ordenar === 'vistas') {
-        return res.send(JSON.stringify(resultados.sort((a, b) => b.vistas - a.vistas)));
+        return res.status(404).end();
     }
      res.json(resultados);
 });
@@ -30,13 +26,12 @@ routerMarketing.get('/:tema/:nivel', (req, res) => {
     const resultados = marketing.filter(curso => curso.tema === tema && curso.nivel === nivel);
 
     if (resultados.length === 0) {
-        return res.status(404).send(`No se encontraron cursos de ${tema}`);
+        return res.status(404).end();
     }
     if (req.query.ordenar === 'vistas') {
-        return res.send(JSON.stringify(resultados.sort((a, b) => b.vistas - a.vistas)));
-    }
-
-    res.json(resultados);
+        return res.send(resultados.sort((a, b) => b.vistas - a.vistas));
+    } 
+      res.json(resultados);
 });
 
 // Ruta para agregar un nuevo curso de marketing
@@ -59,9 +54,8 @@ routerMarketing.post('/',(req, res) => {
   if (indice >= 0) {
     marketing[indice] = cursoActualizado; // Actualiza el curso en el índice encontrado
   } else {
-    return res.status(404).send(`Curso con ID ${id} no encontrado`);
-  }
-  // Si el curso no se encuentra, devuelve un error 404
+    return res.status(404).end();
+  }// Si el curso no se encuentra, devuelve un error 404
   res.json(marketing);
 });
 
@@ -77,7 +71,7 @@ routerMarketing.patch('/:id', (req, res) => {
     const cursoAModificar = marketing[indice];
     Object.assign(cursoAModificar, infoNueva); // Modifica el curso con la nueva información
   } else {
-    return res.status(404).send(`Curso con ID ${id} no encontrado`);
+    return res.status(404).end(); 
   }
   res.json(marketing);
 });
@@ -92,7 +86,7 @@ routerMarketing.delete('/:id', (req, res) => {
   if (indice >= 0) {
     marketing.splice(indice, 1); // Elimina el curso del array
   } else {
-    return res.status(404).send(`Curso con ID ${id} no encontrado`);
+    return res.status(404).end();
   }
   res.json(marketing);
 });
