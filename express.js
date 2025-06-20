@@ -1,29 +1,28 @@
-const express = require(`express`)
+const express = require('express');
 const app = express();
 
-const {infoCourses} = require('./data/courses.js');
-console.log(infoCourses);
+const {infoCursos} = require('./data/cursos.js');
+
+//Routers
+const routerProgramacion = require('./routers/programacion.js');
+app.use('/api/cursos/programacion',  routerProgramacion);
 
 const routerMarketing = require('./routers/marketing.js');
+app.use('/api/cursos/marketing', routerMarketing);
 
-const routerProgramming = require('./routers/programming.js')
-
-//Rutas
-app.use("/api/courses/programming", routerProgramming);
-
-app.use("/api/courses/marketing", routerMarketing);
-
-//Rutas
-app.get('/api/courses', (req, res) =>{
-    res.send(JSON.stringify(infoCourses));
-} );
+//routing
 
 app.get("/", (req, res) => {
     res.send(`El servidor está funcionando correctamente. Puedes acceder a las rutas de cursos de programación y marketing.`);
-})
+});
+
+app.get('/api/cursos', (req, res) => {
+    res.send(JSON.stringify(infoCursos));
+});
+
 
 const PUERTO = 3000;
 
-servidor.listen(PUERTO, () => {
+app.listen(PUERTO, () => {
     console.log(`El servidor esta escuchando en http://localhost:${PUERTO}...`);
 });

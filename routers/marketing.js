@@ -1,128 +1,42 @@
-const express = require("express");
+const express = require('express');
+
+const {marketing} = require('../data/cursos.js').infoCursos;
+
 const routerMarketing = express.Router();
-const { marketing } = require("../data/courses.js").infoCourses;
 
-
-routerMarketing.use(express.json());
-
-// se incluyen funciones auxiliares
-const {
-  sortByViewsAscending,
-  sortByViewsDescending,
-} = require("../auxiliaryFunctions.js");
-
-// solo cursos de marketing
-
-routerMarketing.get("/", (req, res) => {
-  res.send(JSON.stringify(marketing));
+routerMarketing.get('/', (req, res) => {
+    res.send(JSON.stringify(marketing)); 
 });
 
-// Marketing courses filter by subject
-//parametros query aceptados:
-// orderascending=views:se muestra los cursos de marketing ordenados por views en orden ascendente
-// orderdescending=views:se muestra los cursos de marketing ordenados por views en orden descendente
+routerMarketing.get('/:tema', (req, res) => {
+    const tema = req.params.tema;
+    const resultados = marketing.filter(curso => curso.tema === tema);
 
-routerMarketing.get("/:subject", (req, res) => {
-  const subject = req.params.subject;
-  const results = marketing.filter(
-    (course) => course.subject === subject.toLowerCase()
-  );
+    if (resultados.length === 0) {
+        return res.status(404).send(`No se encontraron cursos de ${tema}`);
+    }
 
-  if (results.length === 0) {
-    return res.status(404).send(`Could not find "${subject}" courses..`);
-  }
-
-  if (req.query.orderascending === "views") {
-    return res.send(JSON.stringify(sortByViewsAscending(results)));
-  }
-
-  if (req.query.orderdescending === "views") {
-    return res.send(JSON.stringify(sortByViewsDescending(results)));
-  }
-
-  res.send(JSON.stringify(results));
+    if (req.query.ordenar === 'vistas') {
+        return res.send(JSON.stringify(resultados.sort((a, b) => b.vistas - a.vistas)));
+    }
+     res.send(JSON.stringify(resultados));
 });
 
-// filtrar cursos de marketing por subject y level
 
-routerMarketing.get("/:subject/:level", (req, res) => {
-  const subject = req.params.subject;
-  const level = req.params.level;
+routerMarketing.get('/:tema/:nivel', (req, res) => {
+    const tema = req.params.tema;
+    const nivel = req.params.nivel;
 
-  const results = marketing.filter(
-    (courses) =>
-      courses.subject.toLowerCase() === subject.toLowerCase() &&
-      courses.level.toLowerCase() === level.toLowerCase()
-  );
+    const resultados = marketing.filter(curso => curso.tema === tema && curso.nivel === nivel);
 
-  if (results.length === 0) {
-    return res
-      .status(204)
-      .json(`Could not find ${subject} courses of ${level} level :(`);
-  }
+    if (resultados.length === 0) {
+        return res.status(404).send(`No se encontraron cursos de ${tema}`);
+    }
+    if (req.query.ordenar === 'vistas') {
+        return res.send(JSON.stringify(resultados.sort((a, b) => b.vistas - a.vistas)));
+    }
 
-  res.send(JSON.stringify(results));
-});
-
-// Post
-
-routerMarketing.post("/", (req, res) => {
-  let newCourse = req.body;
-  marketing.push(newCourse);
-  res.send(JSON.stringify(marketing));
-});
-
-// Put
-
-routerMarketing.put("/:id", (req, res) => {
-  const updatedCourse = req.body;
-  const id = req.params.id;
-
-  const index = marketing.findIndex((course) => course.id == id);
-
-  if (index >= 0) {
-    marketing[index] = updatedCourse;
-  } else {
-    return res
-      .status(404)
-      .json(`Marketing course with id ${id} could not be found`);
-  }
-  res.send(JSON.stringify(marketing));
-});
-
-// Patch
-
-routerMarketing.patch("/:id", (req, res) => {
-  const updatedElement = req.body;
-  const id = req.params.id;
-
-  const index = marketing.findIndex((course) => course.id == id);
-
-  if (index >= 0) {
-    const courseToBeModified = marketing[index];
-    Object.assign(courseToBeModified, updatedElement);
-  } else {
-    return res
-      .status(404)
-      .json(`Marketing course with id ${id} could not be found`);
-  }
-  res.send(JSON.stringify(marketing));
-});
-
-// Delete
-
-routerMarketing.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  const index = marketing.findIndex((course) => course.id == id);
-
-  if (index >= 0) {
-    marketing.splice(index, 1);
-  } else {
-    return res
-      .status(404)
-      .json(`Marketing course with id ${id} could not be found`);
-  }
-  res.send(JSON.stringify(marketing));
+    res.send(JSON.stringify(resultados));
 });
 
 module.exports = routerMarketing;
