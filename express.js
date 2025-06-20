@@ -2,6 +2,7 @@ const express = require(`express`)
 const app = express();
 
 const {infoCourses} = require('./data/courses.js');
+console.log(infoCourses);
 
 const routerMarketing = require('./routers/marketing.js');
 

@@ -1,4 +1,4 @@
-const infoCursos = {
+let infoCursos = {
     programming: [
         { 
             id: 1, 
