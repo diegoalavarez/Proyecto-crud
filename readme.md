@@ -149,4 +149,4 @@ Puedes probar los endpoints usando [index.http](index.http) en VS Code con la ex
 
 ## Autoría
 
-Desarrollado por Rafael
+Desarrollado por Rafael y Diego
