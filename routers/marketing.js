@@ -23,7 +23,7 @@ routerMarketing.get('/:tema/:nivel', (req, res) => {
     const tema = req.params.tema;
     const nivel = req.params.nivel;
 
-    const resultados = marketing.filter(curso => curso.tema === tema && curso.nivel === nivel);
+    const resultados = marketing.filter(curso => curso.tema === tema && curso.nivel === nivel); // Filtra los cursos por tema y nivel
 
     if (resultados.length === 0) {
         return res.status(404).end();
