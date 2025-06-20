@@ -7,7 +7,7 @@ const routerProgramacion = express.Router();
 routerProgramacion.use(express.json()); // Middleware para parsear JSON en el cuerpo de las solicitudes
 
 routerProgramacion.get('/', (req, res) => {
-    res.send(JSON.stringify(programacion)); 
+    res.send(programacion); 
 }); // Ruta para obtener todos los cursos de programación
 
 routerProgramacion.get('/:lenguaje', (req, res) => {
@@ -19,10 +19,10 @@ routerProgramacion.get('/:lenguaje', (req, res) => {
     }
 
     if (req.query.ordenar === 'vistas') {
-        return res.send(JSON.stringify(resultados.sort((a, b) => b.vistas - a.vistas)));
+        return res.send(resultados.sort((a, b) => b.vistas - a.vistas));
     }
 
-    res.send(JSON.stringify(resultados));
+    res.send(resultados);
 });
    
  routerProgramacion.get('/:lenguaje/:nivel', (req, res) => {
@@ -35,7 +35,7 @@ routerProgramacion.get('/:lenguaje', (req, res) => {
         return res.status(404).send(`No se encontraron cursos de ${lenguaje} en el nivel ${nivel}`);
     }
 
-    res.send(JSON.stringify(resultados));
+    res.send(resultados);
  });
 
 // Ruta para agregar un nuevo curso de programación
@@ -43,7 +43,7 @@ routerProgramacion.get('/:lenguaje', (req, res) => {
 routerProgramacion.post('/',(req, res) => {
     let cursoNuevo = req.body;
     programacion.push(cursoNuevo);
-    res.send(JSON.stringify(programacion));
+    res.send(programacion);
  });
 
  // Ruta para actualizar un curso de programación por ID
@@ -57,8 +57,11 @@ routerProgramacion.post('/',(req, res) => {
 
   if (indice >= 0) {
     programacion[indice] = cursoActualizado; // Actualiza el curso en el índice encontrado
+  } else {
+    res.status(404).send(`Curso con ID ${id} no encontrado`);
+    return;
   }
-  res.json(programacion);
+  res.send(programacion);
 });
 
 // Ruta para modificar parcialmente un curso de programación por ID
@@ -72,6 +75,9 @@ routerProgramacion.patch('/:id', (req, res) => {
   if (indice >= 0) {
     const cursoAModificar = programacion[indice];
     Object.assign(cursoAModificar, infoNueva); // Modifica el curso con la nueva información
+  } else {
+    res.status(404).send(`Curso con ID ${id} no encontrado`);
+    return;
   }
   res.json(programacion);
 });
@@ -85,7 +91,10 @@ routerProgramacion.delete('/:id', (req, res) => {
 
   if (indice >= 0) {
     programacion.splice(indice, 1); // Elimina el curso del array
-  }
+  } else {
+    res.status(404).send(`Curso con ID ${id} no encontrado`);
+    return;
+  } 
   res.json(programacion);
 });
 
