@@ -1,23 +1,24 @@
 {
-  "dependencies": {
-    "express": "^5.1.0"
-  },
   "name": "proyecto-crud",
   "version": "1.0.0",
-  "main": "auxiliaryFunctions.js",
-  "devDependencies": {},
+  "description": "Crud de cursos con node.js y express",
+  "main": "express.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon express.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rafaeltriasdev/Proyecto-crud.git"
   },
-  "author": "Rafael",
+  "author": "Rafael y Diego",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rafaeltriasdev/Proyecto-crud/issues"
   },
   "homepage": "https://github.com/rafaeltriasdev/Proyecto-crud#readme",
-  "description": ""
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
 }
