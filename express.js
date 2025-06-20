@@ -20,7 +20,7 @@ app.get('/api/cursos', (req, res) => {
     res.send(JSON.stringify(infoCursos));
 });
 
-
+// ruta del server
 const PUERTO = 3000;
 
 app.listen(PUERTO, () => {
